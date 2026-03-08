@@ -56,3 +56,42 @@ export const inviteMember = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const getTripById = async (req, res) => {
+  try {
+    const { tripId } = req.params;
+    const trip = await Trip.findOne({
+      _id: tripId,
+      "members.user": req.user.id
+    });
+
+    if (!trip) {
+      return res.status(404).json({ message: "Trip not found" });
+    }
+
+    res.json(trip);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const updateTrip = async (req, res) => {
+  try {
+    const { tripId } = req.params;
+
+    // Using findOneAndUpdate ensures we only update if the user is a member
+    const trip = await Trip.findOneAndUpdate(
+      { _id: tripId, "members.user": req.user.id },
+      req.body,
+      { new: true, runValidators: true }
+    );
+
+    if (!trip) {
+      return res.status(404).json({ message: "Trip not found or unauthorized to update" });
+    }
+
+    res.json(trip);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
