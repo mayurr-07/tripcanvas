@@ -10,7 +10,7 @@ import type {
 } from "../types/app";
 
 export const api = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "https://tripcanvas-os3a.onrender.com/api",
 });
 
 api.interceptors.request.use((config) => {
