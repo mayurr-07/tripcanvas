@@ -17,8 +17,12 @@ import type {
   Trip,
 } from "../types/app";
 
+// 1 & 2: FIX API BASE URL WITH ENV VARIABLE
+export const API = import.meta.env.VITE_API_URL || "https://tripcanvass.onrender.com";
+
+// Using axios instance configured to use the dynamic API URL
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api` : "http://localhost:5000/api",
+  baseURL: `${API}/api`,
 });
 
 api.interceptors.request.use((config) => {
@@ -78,13 +82,13 @@ function mapBackendTripToFrontend(trip: any): Trip {
 
 export async function loginRequest(payload: LoginPayload): Promise<AuthResponse> {
   try {
-    const { data } = await api.post<AuthResponse>("/auth/login", payload);
+    const { data } = await axios.post<AuthResponse>(`${API}/api/auth/login`, payload);
     
     if (!data || !data.token) {
       throw new Error("Invalid response from server");
     }
 
-    const userData: any = data.user || data; // handle both nested and flat responses
+    const userData: any = data.user || data; 
     const userId = userData._id || userData.id;
 
     return {
@@ -104,7 +108,7 @@ export async function loginRequest(payload: LoginPayload): Promise<AuthResponse>
 
 export async function registerRequest(payload: RegisterPayload): Promise<AuthResponse> {
   try {
-    const { data } = await api.post<AuthResponse>("/auth/register", {
+    const { data } = await axios.post<AuthResponse>(`${API}/api/auth/register`, {
       username: payload.name,
       email: payload.email,
       password: payload.password
@@ -133,6 +137,7 @@ export async function registerRequest(payload: RegisterPayload): Promise<AuthRes
 }
 
 export async function getTripsRequest(): Promise<{ ownedTrips: Trip[]; sharedTrips: Trip[] }> {
+  // Using the configured axios instance for other authenticated requests
   const { data } = await api.get("/trips");
   return {
     ownedTrips: data.ownedTrips.map(mapBackendTripToFrontend),
