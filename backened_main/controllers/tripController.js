@@ -22,7 +22,11 @@ export const getTrips = async (req, res) => {
     const trips = await Trip.find({
       "members.user": req.user.id
     });
-    res.json(trips);
+    
+    const ownedTrips = trips.filter(t => String(t.owner) === String(req.user.id));
+    const sharedTrips = trips.filter(t => String(t.owner) !== String(req.user.id));
+
+    res.json({ ownedTrips, sharedTrips });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

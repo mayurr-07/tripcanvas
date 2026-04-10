@@ -139,9 +139,17 @@ export async function registerRequest(payload: RegisterPayload): Promise<AuthRes
 export async function getTripsRequest(): Promise<{ ownedTrips: Trip[]; sharedTrips: Trip[] }> {
   // Using the configured axios instance for other authenticated requests
   const { data } = await api.get("/trips");
+  
+  if (Array.isArray(data)) {
+    return {
+      ownedTrips: data.map(mapBackendTripToFrontend),
+      sharedTrips: [],
+    };
+  }
+
   return {
-    ownedTrips: data.ownedTrips.map(mapBackendTripToFrontend),
-    sharedTrips: data.sharedTrips.map(mapBackendTripToFrontend),
+    ownedTrips: (data?.ownedTrips || []).map(mapBackendTripToFrontend),
+    sharedTrips: (data?.sharedTrips || []).map(mapBackendTripToFrontend),
   };
 }
 
