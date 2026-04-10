@@ -60,3 +60,18 @@ export const inviteMember = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const getTrip = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const trip = await Trip.findById(id);
+    
+    if (!trip) {
+      return res.status(404).json({ message: "Trip not found" });
+    }
+    
+    res.json(trip);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
