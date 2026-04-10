@@ -26,6 +26,11 @@ const activitySchema = new mongoose.Schema(
     required: true
   },
 
+  notes: {
+    type: String,
+    default: ""
+  },
+
   order: {
     type: Number,
     default: 0

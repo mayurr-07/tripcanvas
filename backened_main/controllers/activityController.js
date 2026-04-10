@@ -4,14 +4,15 @@ export const createActivity = async (req, res) => {
 
   try {
 
-    const { trip, title, location, time, day } = req.body;
+    const { trip, tripId, title, location, time, day, notes } = req.body;
 
     const activity = await Activity.create({
-      trip,
+      trip: trip || tripId,
       title,
       location,
       time,
-      day
+      day: day || 1,
+      notes: notes || ""
     });
 
     res.status(201).json(activity);

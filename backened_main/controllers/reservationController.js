@@ -4,10 +4,10 @@ export const createReservation = async (req, res) => {
 
   try {
 
-    const { trip, type, title, date, notes } = req.body;
+    const { trip, tripId, type, title, date, notes } = req.body;
 
     const reservation = await Reservation.create({
-      trip,
+      trip: trip || tripId,
       type,
       title,
       date,

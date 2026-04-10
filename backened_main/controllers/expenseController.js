@@ -5,10 +5,10 @@ export const addExpense = async (req, res) => {
 
   try {
 
-    const { trip, title, amount } = req.body;
+    const { trip, tripId, title, amount } = req.body;
 
     const expense = await Expense.create({
-      trip,
+      trip: trip || tripId,
       title,
       amount,
       paidBy: req.user.id

@@ -3,9 +3,11 @@ import Attachment from "../models/Attachment.js";
 export const uploadFile = async (req, res) => {
 
   try {
+    const { trip, tripId, activity, activityId } = req.body;
 
     const attachment = await Attachment.create({
-      trip: req.body.trip,
+      trip: trip || tripId,
+      activity: activity || activityId,
       file: req.file.filename,
       uploadedBy: req.user.id
     });

@@ -3,9 +3,12 @@ import Trip from "../models/Trip.js";
 
 export const createTrip = async (req, res) => {
   try {
-    const { title, startDate, endDate } = req.body;
+    const { title, destination, travelers, budget, startDate, endDate } = req.body;
     const trip = await Trip.create({
       title,
+      destination,
+      travelers,
+      budget,
       startDate,
       endDate,
       owner: req.user.id,

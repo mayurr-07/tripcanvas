@@ -3,10 +3,10 @@ import ChecklistItem from "../models/ChecklistItem.js";
 export const createChecklistItem = async (req, res) => {
   try {
 
-    const { trip, text } = req.body;
+    const { trip, tripId, text } = req.body;
 
     const item = await ChecklistItem.create({
-      trip,
+      trip: trip || tripId,
       text
     });
 

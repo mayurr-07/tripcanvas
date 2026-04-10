@@ -7,6 +7,11 @@ const attachmentSchema = new mongoose.Schema(
     ref: "Trip"
   },
 
+  activity: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Activity"
+  },
+
   file: String,
 
   uploadedBy: {

@@ -4,11 +4,11 @@ export const createComment = async (req, res) => {
 
   try {
 
-    const { activity, text } = req.body;
+    const { activity, activityId, text, message } = req.body;
 
     const comment = await Comment.create({
-      activity,
-      text,
+      activity: activity || activityId,
+      text: text || message,
       user: req.user.id
     });
 
