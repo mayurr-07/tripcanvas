@@ -109,7 +109,7 @@ export async function loginRequest(payload: LoginPayload): Promise<AuthResponse>
 export async function registerRequest(payload: RegisterPayload): Promise<AuthResponse> {
   try {
     const { data } = await axios.post<AuthResponse>(`${API}/api/auth/register`, {
-      username: payload.name,
+      name: payload.name,
       email: payload.email,
       password: payload.password
     });
