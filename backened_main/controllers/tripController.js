@@ -113,17 +113,34 @@ export const generateInvite = async (req, res) => {
 export const joinTrip = async (req, res) => {
   try {
     const { token } = req.params;
-    const trip = await Trip.findById(token);
-    if (!trip) return res.status(404).json({ message: "Trip not found or invalid link" });
+    
+    // Check if token is valid ObjectId format to prevent CastError
+    if (token.length !== 24) {
+      return res.status(400).json({ message: "Invalid invitation link" });
+    }
 
-    const isMember = trip.members.some(m => String(m.user) === String(req.user.id));
+    const trip = await Trip.findById(token);
+    if (!trip) {
+      return res.status(404).json({ message: "This trip no longer exists or the link is invalid." });
+    }
+
+    // Defensive check for members array existence
+    if (!trip.members) trip.members = [];
+
+    // Check if user is already a member (owner or invited)
+    const isMember = trip.members.some(m => m && m.user && String(m.user) === String(req.user.id));
+    
     if (!isMember) {
-      trip.members.push({ user: req.user.id, role: "viewer" });
+      trip.members.push({ 
+        user: req.user.id, 
+        role: "viewer" 
+      });
       await trip.save();
     }
 
     res.json({ message: "Successfully joined trip", trip });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error("Join Trip Error:", error);
+    res.status(500).json({ message: "Internal server error while joining trip" });
   }
 };
