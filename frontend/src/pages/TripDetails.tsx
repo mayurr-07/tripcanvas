@@ -13,6 +13,7 @@ import { InviteModal } from "../components/InviteModal";
 import { Navbar } from "../components/Navbar";
 import { ReservationCard } from "../components/ReservationCard";
 import { useAuth } from "../context/AuthContext";
+import { cn } from "../utils/cn";
 import {
   createActivityRequest,
   createAttachmentRequest,
@@ -47,6 +48,8 @@ export function TripDetailsPage() {
   const [selectedDayId, setSelectedDayId] = useState("");
   const [selectedActivityId, setSelectedActivityId] = useState<string | null>(null);
   const [activityForm, setActivityForm] = useState({ title: "", location: "", time: "" });
+  const [isEditingBudget, setIsEditingBudget] = useState(false);
+  const [tempBudget, setTempBudget] = useState("");
 
   const fetchTripData = async () => {
     try {
@@ -359,10 +362,54 @@ export function TripDetailsPage() {
                   <Users className="h-4 w-4 text-[var(--accent)]" />
                   {trip.travelers} travelers
                 </span>
-                <span className="flex items-center gap-2">
-                  <Wallet className="h-4 w-4 text-[var(--accent)]" />
-                  Budget ${trip.budget.toLocaleString()}
-                </span>
+                {isEditingBudget ? (
+                  <div className="flex items-center gap-2">
+                    <Wallet className="h-4 w-4 text-[var(--accent)]" />
+                    <input
+                      type="number"
+                      autoFocus
+                      className="w-24 rounded-lg border border-slate-200 bg-white px-2 py-1 text-sm outline-none focus:border-[var(--accent)]"
+                      value={tempBudget}
+                      onChange={(e) => setTempBudget(e.target.value)}
+                      onBlur={async () => {
+                        const nextBudget = Number(tempBudget) || 0;
+                        if (trip) {
+                          const updated = { ...trip, budget: nextBudget };
+                          setTrip(updated);
+                          await saveTripRequest(updated);
+                        }
+                        setIsEditingBudget(false);
+                      }}
+                      onKeyDown={async (e) => {
+                        if (e.key === "Enter") {
+                          const nextBudget = Number(tempBudget) || 0;
+                          if (trip) {
+                            const updated = { ...trip, budget: nextBudget };
+                            setTrip(updated);
+                            await saveTripRequest(updated);
+                          }
+                          setIsEditingBudget(false);
+                        }
+                        if (e.key === "Escape") setIsEditingBudget(false);
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <span 
+                    className={cn(
+                      "flex items-center gap-2 transition-colors",
+                      canEdit && "cursor-pointer hover:text-slate-950"
+                    )}
+                    onClick={() => {
+                      if (!canEdit) return;
+                      setTempBudget(String(trip.budget));
+                      setIsEditingBudget(true);
+                    }}
+                  >
+                    <Wallet className="h-4 w-4 text-[var(--accent)]" />
+                    Budget ${trip.budget.toLocaleString()}
+                  </span>
+                )}
               </div>
             </div>
             {canAdmin && (

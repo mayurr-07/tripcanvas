@@ -18,10 +18,22 @@ const expenseSchema = new mongoose.Schema(
     required: true
   },
 
+  category: {
+    type: String,
+    default: "Dining"
+  },
+
   paidBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
-  }
+  },
+
+  splitAmong: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    }
+  ]
 
 },
 { timestamps: true }

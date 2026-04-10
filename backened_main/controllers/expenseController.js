@@ -5,13 +5,15 @@ export const addExpense = async (req, res) => {
 
   try {
 
-    const { trip, tripId, title, amount } = req.body;
+    const { trip, tripId, title, amount, category, splitAmong } = req.body;
 
     const expense = await Expense.create({
       trip: trip || tripId,
       title,
       amount,
-      paidBy: req.user.id
+      category: category || "Dining",
+      paidBy: req.user.id,
+      splitAmong: splitAmong || [req.user.id]
     });
 
     res.status(201).json(expense);
