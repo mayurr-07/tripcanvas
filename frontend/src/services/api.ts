@@ -163,9 +163,17 @@ export async function getTripRequest(id: string): Promise<Trip | undefined> {
     const { data } = await api.get(`/trips/${id}`);
     return mapBackendTripToFrontend(data);
   } catch (err: any) {
-    if (err.response?.status === 404 || err.response?.status === 500) {
+    if (err.response?.status === 404 || err.response?.status === 500 || err.response?.status === 405) {
       const { data } = await api.get("/trips");
-      const match = data.find((t: any) => t._id === id || t.id === id);
+      let allTrips: any[] = [];
+      
+      if (Array.isArray(data)) {
+        allTrips = data;
+      } else if (data) {
+        allTrips = [...(data.ownedTrips || []), ...(data.sharedTrips || [])];
+      }
+      
+      const match = allTrips.find((t: any) => String(t._id || t.id) === String(id));
       return match ? mapBackendTripToFrontend(match) : undefined;
     }
     throw err;
