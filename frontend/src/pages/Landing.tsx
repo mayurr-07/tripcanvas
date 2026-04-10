@@ -81,7 +81,7 @@ function TravelBackdrop() {
 
 export function LandingPage() {
   return (
-    <motion.main initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="bg-white text-slate-950">
+    <motion.main initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-slate-950">
       <Navbar publicMode />
 
       <AmberGlowBackground className="min-h-screen">
