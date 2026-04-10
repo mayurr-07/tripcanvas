@@ -82,57 +82,59 @@ export function LandingPage() {
     <motion.main initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="bg-white text-slate-950">
       <Navbar publicMode />
 
-      <section className="relative isolate min-h-screen overflow-hidden bg-[linear-gradient(180deg,#ffffff_0%,#fffaf5_100%)]">
-        <TravelBackdrop />
-        <div className="relative mx-auto flex min-h-screen max-w-7xl items-center px-6 pb-20 pt-32 lg:px-10">
-          <div className="max-w-3xl">
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7 }}
-              className="text-[clamp(3rem,8vw,7.2rem)] font-extrabold tracking-[-0.08em]"
-            >
-              TripCanvas
-            </motion.p>
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              className="mt-6 max-w-2xl text-[clamp(1.6rem,3.1vw,3rem)] font-semibold tracking-[-0.04em] text-slate-900"
-            >
-              Collaborative trip planning without the spreadsheet chaos.
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="mt-6 max-w-xl text-lg leading-8 text-slate-600"
-            >
-              Design every day, coordinate every traveler, and keep the real travel details in one polished workspace.
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.3 }}
-              className="mt-10 flex flex-wrap gap-4"
-            >
-              <Link
-                to="/register"
-                className="inline-flex items-center gap-2 rounded-xl bg-slate-950 px-6 py-4 text-sm font-semibold text-white transition hover:bg-slate-800"
+      <AmberGlowBackground className="min-h-0">
+        <section className="relative isolate min-h-screen overflow-hidden">
+          <TravelBackdrop />
+          <div className="relative mx-auto flex min-h-screen max-w-7xl items-center px-6 pb-20 pt-32 lg:px-10">
+            <div className="max-w-3xl">
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7 }}
+                className="text-[clamp(3rem,8vw,7.2rem)] font-extrabold tracking-[-0.08em]"
               >
-                Start Planning
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link
-                to="/login"
-                className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-6 py-4 text-sm font-semibold text-slate-900 transition hover:border-[var(--accent)]/50"
+                TripCanvas
+              </motion.p>
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.1 }}
+                className="mt-6 max-w-2xl text-[clamp(1.6rem,3.1vw,3rem)] font-semibold tracking-[-0.04em] text-slate-900"
               >
-                Login
-              </Link>
-            </motion.div>
+                Collaborative trip planning without the spreadsheet chaos.
+              </motion.h1>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.2 }}
+                className="mt-6 max-w-xl text-lg leading-8 text-slate-600"
+              >
+                Design every day, coordinate every traveler, and keep the real travel details in one polished workspace.
+              </motion.p>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.3 }}
+                className="mt-10 flex flex-wrap gap-4"
+              >
+                <Link
+                  to="/register"
+                  className="inline-flex items-center gap-2 rounded-xl bg-slate-950 px-6 py-4 text-sm font-semibold text-white transition hover:bg-slate-800"
+                >
+                  Start Planning
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  to="/login"
+                  className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-6 py-4 text-sm font-semibold text-slate-900 transition hover:border-[var(--accent)]/50"
+                >
+                  Login
+                </Link>
+              </motion.div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </AmberGlowBackground>
 
       {featureSections.map((section, index) => (
         <section key={section.title} className={index % 2 === 0 ? "bg-white" : "bg-[#fffaf5]"}>
