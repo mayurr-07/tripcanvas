@@ -206,6 +206,11 @@ export async function joinTripRequest(token: string): Promise<{ message: string;
   };
 }
 
+export async function updateMemberRoleRequest(tripId: string, userId: string, role: MemberRole) {
+  const { data } = await api.put(`/trips/${tripId}/member/${userId}`, { role });
+  return data;
+}
+
 export async function createActivityRequest(payload: any) {
   const { data } = await api.post("/activities", payload);
   return data;

@@ -25,7 +25,7 @@ export function JoinTripPage() {
         
         // Wait 2 seconds then redirect to the trip page
         setTimeout(() => {
-          navigate(`/trips/${response.trip.id}`);
+          navigate(`/trip/${response.trip.id}`);
         }, 2000);
       } catch (err: any) {
         setStatus("error");

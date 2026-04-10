@@ -1,5 +1,5 @@
 import express from "express";
-import { createTrip, getTrips, getTrip, updateTrip, inviteMember, generateInvite, joinTrip } from "../controllers/tripController.js";
+import { createTrip, getTrips, getTrip, updateTrip, inviteMember, generateInvite, joinTrip, updateMemberRole } from "../controllers/tripController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();
@@ -11,5 +11,6 @@ router.put("/:id", authMiddleware, updateTrip);
 router.post("/:tripId/invite", authMiddleware, inviteMember);
 router.post("/:tripId/generate-invite", authMiddleware, generateInvite);
 router.post("/join/:token", authMiddleware, joinTrip);
+router.put("/:tripId/member/:userId", authMiddleware, updateMemberRole);
 
 export default router;
