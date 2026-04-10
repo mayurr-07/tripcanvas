@@ -92,3 +92,35 @@ export const updateTrip = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const generateInvite = async (req, res) => {
+  try {
+    const { tripId } = req.params;
+    const trip = await Trip.findById(tripId);
+    if (!trip) return res.status(404).json({ message: "Trip not found" });
+
+    const code = String(trip._id);
+    const link = `https://tripcanvas.pages.dev/join/${code}`;
+    res.json({ link, code });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const joinTrip = async (req, res) => {
+  try {
+    const { token } = req.params;
+    const trip = await Trip.findById(token);
+    if (!trip) return res.status(404).json({ message: "Trip not found or invalid link" });
+
+    const isMember = trip.members.some(m => String(m.user) === String(req.user.id));
+    if (!isMember) {
+      trip.members.push({ user: req.user.id, role: "viewer" });
+      await trip.save();
+    }
+
+    res.json({ message: "Successfully joined trip", trip });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

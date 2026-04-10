@@ -194,7 +194,7 @@ export async function inviteTripRequest(tripId: string, payload: InvitePayload):
 }
 
 export async function generateInviteLinkRequest(tripId: string): Promise<{ link: string; code: string }> {
-  const { data } = await api.post(`/trips/${tripId}/invite`);
+  const { data } = await api.post(`/trips/${tripId}/generate-invite`);
   return data;
 }
 
