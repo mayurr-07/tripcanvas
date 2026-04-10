@@ -17,7 +17,7 @@ import type {
   Trip,
 } from "../types/app";
 
-export const API = import.meta.env.VITE_API_URL;
+export const API = import.meta.env.VITE_API_URL || "https://tripcanvass.onrender.com";
 console.log("Current API:", API);
 
 // Using axios instance configured to use the dynamic API URL
