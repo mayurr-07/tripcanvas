@@ -75,3 +75,20 @@ export const getTrip = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const updateTrip = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updates = req.body;
+    
+    const trip = await Trip.findByIdAndUpdate(id, updates, { new: true });
+    
+    if (!trip) {
+      return res.status(404).json({ message: "Trip not found" });
+    }
+    
+    res.json(trip);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
