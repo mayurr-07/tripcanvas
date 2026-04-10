@@ -84,7 +84,7 @@ export function LandingPage() {
     <motion.main initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="bg-white text-slate-950">
       <Navbar publicMode />
 
-      <AmberGlowBackground className="min-h-0">
+      <AmberGlowBackground className="min-h-screen">
         <section className="relative isolate min-h-screen overflow-hidden">
           <TravelBackdrop />
           <div className="relative mx-auto flex min-h-screen max-w-7xl items-center px-6 pb-20 pt-32 lg:px-10">
@@ -136,53 +136,53 @@ export function LandingPage() {
             </div>
           </div>
         </section>
+
+        {featureSections.map((section, index) => (
+          <section key={section.title} className="relative z-10">
+            <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 py-24 lg:grid-cols-2 lg:px-10">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.7 }}
+              >
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--accent)]">{section.eyebrow}</p>
+                <h2 className="mt-4 max-w-xl text-4xl font-semibold tracking-[-0.04em] text-slate-950">{section.title}</h2>
+                <p className="mt-5 max-w-lg text-lg leading-8 text-slate-600">{section.description}</p>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.7, delay: 0.1 }}
+                className="relative overflow-hidden rounded-[2rem] bg-white/40 shadow-sm border border-white/60 backdrop-blur-md p-10"
+              >
+                <div className="absolute inset-0 opacity-20 app-grid" />
+                <div className="relative">
+                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">{section.visualTitle}</p>
+                  <div className="mt-8 space-y-6">
+                    {section.lines.map((line, lineIndex) => (
+                      <motion.div
+                        key={line}
+                        initial={{ opacity: 0, x: -18 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: lineIndex * 0.12 }}
+                        className="flex items-center justify-between border-b border-slate-200/50 pb-4"
+                      >
+                        <p className="text-lg font-medium text-slate-900">{line}</p>
+                        <span className="h-3 w-3 rounded-full bg-[var(--accent)]" />
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </section>
+        ))}
       </AmberGlowBackground>
 
-      {featureSections.map((section, index) => (
-        <section key={section.title} className={index % 2 === 0 ? "bg-white" : "bg-[#fffaf5]"}>
-          <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 py-24 lg:grid-cols-2 lg:px-10">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.7 }}
-            >
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--accent)]">{section.eyebrow}</p>
-              <h2 className="mt-4 max-w-xl text-4xl font-semibold tracking-[-0.04em] text-slate-950">{section.title}</h2>
-              <p className="mt-5 max-w-lg text-lg leading-8 text-slate-600">{section.description}</p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              className="relative overflow-hidden rounded-[2rem] bg-[linear-gradient(180deg,#fffdf9_0%,#fdf1e7_100%)] p-10"
-            >
-              <div className="absolute inset-0 opacity-50 app-grid" />
-              <div className="relative">
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">{section.visualTitle}</p>
-                <div className="mt-8 space-y-6">
-                  {section.lines.map((line, lineIndex) => (
-                    <motion.div
-                      key={line}
-                      initial={{ opacity: 0, x: -18 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.5, delay: lineIndex * 0.12 }}
-                      className="flex items-center justify-between border-b border-slate-200/70 pb-4"
-                    >
-                      <p className="text-lg font-medium text-slate-900">{line}</p>
-                      <span className="h-3 w-3 rounded-full bg-[var(--accent)]" />
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-      ))}
-
-      <section className="bg-slate-950 text-white">
+      <section className="bg-slate-950 text-white relative z-10">
         <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
