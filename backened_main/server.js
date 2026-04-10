@@ -18,11 +18,12 @@ connectDB();
 const app = express();
 
 app.use(cors({
-  origin: true,
+  origin: ["https://tripcanvas.pages.dev", "http://localhost:5173", "http://localhost:3000"],
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   credentials: true
 }));
 app.use(express.json());
+app.options("*", cors());
 
 app.use("/api/attachments", attachmentRoutes);
 app.use("/api/reservations", reservationRoutes);
