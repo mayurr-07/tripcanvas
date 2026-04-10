@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import { ArrowRight, CalendarRange, DollarSign, MapPin, Plane, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
+import { AmberGlowBackground } from "../components/ui/demo";
+import { cn } from "../utils/cn";
 
 const featureSections = [
   {
